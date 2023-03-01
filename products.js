@@ -84,6 +84,10 @@ createApp({
         .catch((error) => {
           alert(error.response.data.message);
         })
+    },
+    createImg(){
+      this.tempProduct.imagesUrl = [];
+      this.tempProduct.imagesUrl.push('');
     }
   },
   mounted() {
