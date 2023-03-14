@@ -1,4 +1,5 @@
 import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+import pagination from "./pagination.js";
 
 let productModal = null;
 let delProductModal = null;
@@ -13,7 +14,8 @@ createApp({
       tempProduct: {
         imagesUrl: [],
       },
-      isNew: false //用來確認是新增或是編輯
+      isNew: false, //用來確認是新增或是編輯
+      page: {}
     };
   },
   methods: {
@@ -28,11 +30,13 @@ createApp({
           window.location = 'login.html';
         })
     },
-    showProducts() {
-      axios.get(`${this.api}/api/${this.apiPath}/admin/products`)
+    showProducts(page = 1) { // 參數預設值(es6寫法)
+      axios.get(`${this.api}/api/${this.apiPath}/admin/products/?page=${page}`)
         .then((response) => {
-          // console.log(response.data.products);
+          // console.log(response.data);
           this.products = response.data.products;
+          this.page = response.data.pagination;
+          // console.log(this.page);
         }).catch((error) => {
           alert(error.data.message);
         })
@@ -89,6 +93,9 @@ createApp({
       this.tempProduct.imagesUrl = [];
       this.tempProduct.imagesUrl.push('');
     }
+  },
+  components: {
+    pagination,
   },
   mounted() {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)qianToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");

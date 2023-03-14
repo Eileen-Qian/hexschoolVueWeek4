@@ -72,11 +72,12 @@
               </tr>
             </tbody>
           </table>
-          <p>目前有 <span>{{ products.length }}</span> 項產品</p>
-
         </div>
+        <!-- pagination 分頁 -->
+        <pagination :pages="page" :show-products="showProducts"
+        @change-page="showProducts"></pagination>
         <!-- 產品細節 -->
-        <div class="row">
+        <div class="row mt-4">
           <h2>單一產品細節</h2>
           <template v-if="productDetail.id">
             <div class="card mb-3">
